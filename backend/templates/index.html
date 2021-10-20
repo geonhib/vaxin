@@ -68,7 +68,7 @@
     <nav id="navbar-main" aria-label="Primary navigation" class="navbar navbar-main navbar-expand-lg navbar-theme-primary headroom navbar-dark navbar-theme-secondary">
         <div class="container position-relative">
             <a class="navbar-brand me-lg-5" href="../../index.html">
-                <img class="navbar-brand-dark" src="stat../../assets/img/brand/light.svg" alt="Logo light">
+                <img class="navbar-brand-dark" src="{% static 'assets/img/brand/light.svg' %}" alt="Logo light">
                 <img class="navbar-brand-light" src="../../assets/img/brand/dark.svg" alt="Logo dark">
             </a>
             <div class="navbar-collapse collapse me-auto" id="navbar_global">
@@ -373,8 +373,9 @@
                <div class="row justify-content-between align-items-center">
                   <div class="col-12 col-md-7 col-lg-6 text-center text-md-left">
                         <h1 class="display-2 mb-4">Vaxin <br class="d-none d-md-inline">Your Vaccination Companion  </h1>
-                        <p class="lead mb-4 text-muted">Themesberg can help you build a modern website, a creative logo or PWA, that will bring you customers and and stay on top of your competition.</p>
-                        <a href="{{ login_url }}" class="btn btn-tertiary me-3 animate-up-2">What we do <span class="ms-2"><span class="fas fa-arrow-right"></span></span></a>
+                        <p class="lead mb-4 text-muted">With vaxin, be in the know of all your vaccination details and reminders, 
+                            all on one secure and modern platform.</p>
+                        <a href="{% url 'account_login' %}" class="btn btn-tertiary me-3 animate-up-2">What we do <span class="ms-2"><span class="fas fa-arrow-right"></span></span></a>
                     </div>
                   <div class="col-12 col-md-5 d-none d-md-block text-center"><img src="{% static 'assets/img/illustrations/about-illustration.svg' %}" alt=""></div>
                </div>
@@ -390,8 +391,8 @@
                     </div>
                     <div class="col-md-6 col-xl-5 text-center text-md-left">
                         <h2 class="h1 mb-5">All challenges accepted.</h2>
-                        <p class="lead">Themesberg is an experienced and passionate group of designers, developers, project managers, writers and artists. Every client we work with becomes a part of the team. Together we face the challenges and celebrate the victories.</p>
-                        <p class="lead">With a culture of collaboration, a roster of talent, and several office pooches, the Themesberg team is active in the creative community, endlessly interested in what’s next, and generally pleasant to be around.</p>
+                        <p class="lead">Vaxin is a modern secure application to help you track all your vaccination 
+                            details and remind you to take your next dose. It makes vaccinations connenient.</p>
                         <img src="{% static 'assets/img/signature.svg' %}" alt="signature" class="mt-4" width="150">
                     </div>
                 </div>
@@ -449,7 +450,7 @@
             <div class="container">
                 <div class="row text-center">
                     <div class="col">
-                        <h2 class="h1 fw-light"><span class="fw-bold">Our</span> history</h2>
+                        <h2 class="h1 fw-light"><span class="fw-bold">Using</span> Vaxin</h2>
                     </div>
                 </div>
                 <div class="row justify-content-center mt-6">
@@ -458,11 +459,13 @@
                             <div class="timeline timeline-one dark px-3 px-sm-0">
                                 <!-- Timeline Item 1 -->
                                 <div class="timeline-item">
-                                    <h3 class="h4 mb-4">Present</h3>
-                                    <p>Now over seven years old, Bootstrap is an established and widely-used HTML, CSS, and JavaScript framework. It can be used as a basis for creating responsive web and mobile sites and web applications.</p>
+                                    <h3 class="h4 mb-4">Signup</h3>
+                                    <p>
+                                        Signup with your email and password, complete feeling in your bio-information.
+                                    </p>
                                 </div>
                                 <!-- Timeline Item 2 -->
-                                <div class="timeline-item">
+                                <!-- <div class="timeline-item">
                                     <h3 class="h4 mb-4">Our first products</h3>
                                     <div class="my-3">
                                         <span class="icon icon-sm icon-purple me-2"><span class="fab fa-bootstrap"></span></span>
@@ -473,23 +476,23 @@
                                     <p>Bootstrap. Build responsive, mobile-first projects on the web with the world's most popular front-end component library. Bootstrap is an open source toolkit for developing with HTML, CSS, and JS. Quickly prototype your
                                         ideas.
                                     </p>
-                                </div>
+                                </div> -->
                                 <!-- Timeline Item 3 -->
-                                <div class="timeline-item">
+                                <!-- <div class="timeline-item">
                                     <h3 class="h4 mb-4">Our office</h3>
                                     <img class="mt-2" src="{% static 'assets/img/office.png' %}" alt="Themesberg workspace" width="300">
                                     <p>AngularJS is a JavaScript-based open-source front-end web application framework mainly maintained by Google and by a community of individuals and corporations to address many of the challenges encountered in developing
                                         single-page applications.
                                     </p>
-                                </div>
+                                </div> -->
                                 <!-- Timeline Item 4 -->
-                                <div class="timeline-item">
+                                <!-- <div class="timeline-item">
                                     <h3 class="h4 mb-4">An ideea becomes a business</h3>
                                     <p>AngularJS is a JavaScript-based open-source front-end web application framework mainly maintained by Google and by a community of individuals and corporations to address many of the challenges encountered in developing
                                         single-page applications.
                                     </p>
                                     <img class="mt-2" src="{% static 'assets/img/signature.svg' %}" alt="signature" width="100">
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -504,14 +507,15 @@
         <!-- Section -->
         <section class="section section-lg">
             <div class="container">
-                <div class="row mb-5 mb-lg-6">
+                <!-- <div class="row mb-5 mb-lg-6">
                     <div class="col-12 col-md-9 col-lg-8 text-center mx-auto">
-                        <h2 class="h1 mb-4">Funny &amp; Creative Team</h2>
-                        <p class="lead">We have developed a multi-discipline portfolio as a digital marketing agency, we also have roots in print media and even photography.
+                        <h2 class="h1 mb-4"> Creative Team</h2>
+                        <p class="lead">Here is the team, that has put this all this together.
                         </p>
                     </div>
-                </div>
-                <div class="row mb-5 mb-lg-6">
+                </div> -->
+
+                <!-- <div class="row mb-5 mb-lg-6">
                     <div class="col-12 col-md-6 col-lg-4 mb-5 mb-lg-0">
                         <div class="card shadow border-gray-300">
                             <img src="{% static 'assets/img/team/profile-picture-1.jpg' %}" class="card-img-top rounded-top" alt="Joseph Portrait">
@@ -608,14 +612,16 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
+
+                <!-- want to work with us? -->
                 <div class="row justify-content-center">
                     <div class="col-12 col-lg-8">
                         <!-- Contact Card -->
                         <div class="card border-0 p-2 p-md-3 p-lg-5">
                             <div class="card-header bg-white border-0 text-center">
-                                <h2>Want to work with us?</h2>
-                                <p>Cool! Let’s talk about your project</p>
+                                <h2>Want to tell us something?</h2>
+                                <p>Cool! Fill in the form below.</p>
                             </div>
                             <div class="card-body pt-0">
                                 <form action="#">
@@ -624,7 +630,7 @@
                                         <label for="name">Your Name</label>
                                         <div class="input-group">
                                             <span class="input-group-text" id="basic-addon3"><span class="fas fa-user-circle"></span></span>
-                                            <input type="text" class="form-control" placeholder="e.g. Bonnie Green" id="name" required>
+                                            <input type="text" class="form-control" placeholder="e.g. Grace Aine" id="name" required>
                                         </div>
                                     </div>
                                     <!-- End of Form -->
@@ -633,7 +639,7 @@
                                         <label for="email">Your Email</label>
                                         <div class="input-group">
                                             <span class="input-group-text" id="basic-addon4"><span class="fas fa-envelope"></span></span>
-                                            <input type="email" class="form-control" placeholder="example@company.com" id="email" required>
+                                            <input type="email" class="form-control" placeholder="aine@gmail.com" id="email" required>
                                         </div>
                                     </div>
                                     <!-- End of Form -->
@@ -663,16 +669,16 @@
              <div class="card border-light px-4 py-1">
                 <div class="card-body text-center text-md-left">
                     <div class="row align-items-center">
-                        <div class="col-md-6">
-                            <h2 class="h1 mb-3">Become one of us</h2>
+                        <div class="col-md-8">
+                            <h2 class="h1 mb-3">Buy me a coffee.</h2>
                             <p class="lead mb-4">
-                                Do you want to join our team and work remotely from anywhere you’d like? We can’t wait to hear from you!
+                                Does Vaxin solve your vaccination information related problems?  
                             </p>
                             <a href="#" class="btn btn-primary">
                                 <span class="me-1">
-                                    <span class="fas fa-file-invoice"></span>
+                                    <span class="fas fa-coffee"></span>
                                 </span>
-                                Check Careers
+                                Donate
                             </a>
                         </div>
                         <div class="col-12 col-md-6 mt-5 mt-md-0 text-md-right">
@@ -690,7 +696,7 @@
     <div class="container">
         <div class="row mt-6">
             <div class="col-md-4">
-                <p><strong>Pixel</strong> is a large User Interface Kit that will help you prototype and design beautiful, creative and modern websites.</p>
+                <p><strong>Vaxin</strong> is your one stop platform for your vaccination details and reminders.</p>
                 <ul class="social-buttons mb-5 mb-lg-0">
                     <li>
                         <a href="https://twitter.com/themesberg" aria-label="twitter social link" class="icon icon-xs icon-white"
@@ -721,35 +727,32 @@
                 </ul>
             </div>
             <div class="col-6 col-md-2 mb-5 mb-lg-0">
-                <h3 class="h5">Themesberg</h3>
+                <h3 class="h5">Vaxin</h3>
                 <ul class="links-vertical">
-                    <li><a target="_blank" href="https://themesberg.com/blog">Blog</a></li>
-                    <li><a target="_blank" href="https://themesberg.com/themes">Themes</a></li>
-                    <li><a target="_blank" href="https://themesberg.com/about">About Us</a>
+                    <li><a target="_blank" href="#">Blog</a></li> <br>
+                    <li><a target="_blank" href="#">About Us</a>
                     </li>
-                    <li><a target="_blank" href="https://themesberg.com/contact">Contact Us</a></li>
                 </ul>
             </div>
             <div class="col-6 col-md-2 mb-5 mb-lg-0">
                 <h3 class="h5">Other</h3>
                 <ul class="links-vertical">
-                    <li><a href="https://themesberg.com/docs/bootstrap-5/pixel/getting-started/quick-start/" target="_blank">Docs
-                            <span class="badge badge-sm badge-secondary me-2">v3.0</span></a></li>
-                    <li><a href="https://themesberg.com/docs/pixel-bootstrap/getting-started/changelog" target="_blank">Changelog</a></li>
-                    <li><a target="_blank" href="https://themesberg.com/licensing">License</a>
-                    </li>
-                    <li><a target="_blank" href="https://github.com/themesberg/pixel-bootstrap-ui-kit/issues">Support</a></li>
+                    <li><a href="#" target="_blank">Docs
+                            <span class="badge badge-sm badge-secondary me-2">v0.1</span></a></li> 
+                    <li><a href="#" target="_blank">Changelog</a></li> <br>
+                    <li><a target="_blank" href="#">License</a></li> <br>
+                    <li><a target="_blank" href="#">Support</a></li> <br>
                 </ul>
             </div>
             <div class="col-12 col-md-4 mb-5 mb-lg-0">
-                <span class="h5">Subscribe</span>
-                <p class="text-muted font-small mt-2">Join our mailing list. We write rarely, but only the best content.
+                <span class="h5">Subscribe to our mailing list</span>
+                <p class="text-muted font-small mt-2">We write rarely, but only the best content.
                 </p>
                 <form action="#">
                     <div class="form-row mb-2">
                         <div class="col-12">
                             <label class="h6 fw-normal text-muted d-none" for="exampleInputEmail3">Email address</label>
-                            <input type="email" class="form-control mb-2" placeholder="example@company.com" name="email"
+                            <input type="email" class="form-control mb-2" placeholder="aine@gmail.com" name="email"
                                 aria-label="Subscribe form" id="exampleInputEmail3" required>
                         </div>
                         <div class="col-12 d-grid">
@@ -767,11 +770,12 @@
         <div class="row">
             <div class="col mb-md-0">
                 <a href="https://themesberg.com" target="_blank" class="d-flex justify-content-center">
-                    <img src="{% static 'assets/img/themesberg.svg' %}" height="25" class="mb-3" alt="Themesberg Logo">
+                    <img src="{% static 'assets/img/brand/light.svg' %}" height="25" class="mb-3" alt="Themesberg Logo">
                 </a>
             <div class="d-flex text-center justify-content-center align-items-center" role="contentinfo">
-                <p class="font-weight-normal font-small mb-0">Copyright © Themesberg
-                    <span class="current-year">2020</span>. All rights reserved.</p>
+               
+                    <a > {% now "Y" %} &copy; <a target="_blank" href="https://acodestore.tech/">Autonomous Codestore </a> </p>
+
                 </div>
             </div>
         </div>
