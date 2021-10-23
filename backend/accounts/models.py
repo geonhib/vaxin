@@ -9,4 +9,4 @@ class CustomUser(AbstractUser):
     last_name = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
-        return self.email
+        return f"{self.first_name} {self.last_name}"

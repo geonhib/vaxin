@@ -11,3 +11,7 @@ def login(request):
 
 def profile(request):
     return render(request, "account/profile.html")
+
+
+def dashboard(request):
+    return render(request, "dashboard.html")    
