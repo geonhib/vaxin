@@ -84,7 +84,7 @@ def vaccine_list(request):
 @login_required(login_url='login') 
 def vaccination_list(request):
     vaccinations = Vaccination.objects.all()
-    vaccination_count = vaccinations.count() 
+    # vaccination_count = vaccinations.count() 
 
     create_form = VaccinationForm(request.POST or None, request.FILES or None)
     if create_form.is_valid():
@@ -98,7 +98,7 @@ def vaccination_list(request):
     context = {
         "create_form": create_form,
         "vaccinations": vaccinations,
-        "vaccination_count": vaccination_count
+        # "vaccination_count": vaccination_count
     }
     return render(request, 'vaccination/list.html', context)  
 
