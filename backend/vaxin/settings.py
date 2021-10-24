@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     # custom
     'accounts',
+    'jab',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
