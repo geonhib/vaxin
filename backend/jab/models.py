@@ -50,14 +50,18 @@ class Vaccine(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-
+DOSAGE_CHOICES = (
+    ("soon", "soon"),
+    ("taken", "taken"),
+    ("missed", "missed")
+)
 class Vaccination(models.Model):   
     drug = models.ForeignKey(Vaccine, on_delete=models.CASCADE)
     patient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='vaccinatee')
     jabbed_on = models.DateField(auto_now_add=False, auto_now=False)
     jabbed_at = models.ForeignKey(Facility, on_delete=models.CASCADE)
     jabbed_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='vaccinator')
-    dose = models.BooleanField(default=False)
+    dose = models.CharField(max_length=30, choices=DOSAGE_CHOICES, default="soon")
     next_dose = models.DateField(auto_now_add=False, auto_now=False, null=True, blank=True)
 
     class Meta :

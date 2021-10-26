@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import activate
 from .models import Facility, Manufacturer, Vaccine, Vaccination
-from django.conf import settings
-User=settings.AUTH_USER_MODEL
+from django.contrib.auth import get_user_model
+User = get_user_model()
 from .forms import FacilityForm, ManufacturerForm, VaccineForm, VaccinationForm
 # from account.forms import ProfileForm
 from django.contrib import messages
@@ -103,50 +103,50 @@ def vaccination_list(request):
     return render(request, 'vaccination/list.html', context)  
 
 
-# @login_required(login_url='login') 
-# def vaccination_detail(request, pk): 
-#     vaccination = get_object_or_404(Vaccination, pk=pk) 
-#     profile = User.objects.get(user=request.user)
+@login_required(login_url='login') 
+def vaccination_detail(request, pk): 
+    vaccination = get_object_or_404(Vaccination, pk=pk) 
+    user = User.objects.get(username=request.user.username)
     
 
-#     edit_profile = ProfileForm(request.POST, request.FILES, instance=profile)
-#     if edit_profile.is_valid():
-#         edit_profile.save()
-#         messages.success(request, 'Profile updated succesfully!')
+    # edit_profile = UserForm(request.POST, request.FILES, instance=profile)
+    # if edit_profile.is_valid():
+    #     edit_profile.save()
+    #     messages.success(request, 'Profile updated succesfully!')
 
-#     # update 
-#     edit_form = VaccinationForm(request.POST or None, instance=vaccination)
-#     if edit_form.is_valid():
-#         edit_form.save()
-#         details = f"updated {vaccination}s details."
-#         messages.success(request, 'vaccination updated succesfully!')
-#         return redirect('vaccination_detail')
+    # update 
+    # edit_form = VaccinationForm(request.POST or None, instance=vaccination)
+    # if edit_form.is_valid():
+    #     edit_form.save()
+    #     details = f"updated {vaccination}s details."
+    #     messages.success(request, 'vaccination updated succesfully!')
+    #     return redirect('vaccination_detail')
 
     
-#     # next vaccination
-#     nvacc_form = NextVaccinationForm(request.POST or None)
-#     if nvacc_form.is_valid():
-#         instance = nvacc_form.save(commit=False)
-#         instance.init_vaccination = Vaccination.objects.get(pk=pk)
-#         instance.drug = vaccination.drug
-#         instance.jabbed_by = request.user.profile
-#         instance.jabbed_on = datetime.date(datetime.now())
-#         instance.save()
-#         details = f"updated {vaccination}s details."
-#         messages.success(request, 'vaccination updated succesfully!')
-#         return redirect('vaccination_detail', pk=pk)        
+    # # next vaccination
+    # nvacc_form = NextVaccinationForm(request.POST or None)
+    # if nvacc_form.is_valid():
+    #     instance = nvacc_form.save(commit=False)
+    #     instance.init_vaccination = Vaccination.objects.get(pk=pk)
+    #     instance.drug = vaccination.drug
+    #     instance.jabbed_by = request.user.profile
+    #     instance.jabbed_on = datetime.date(datetime.now())
+    #     instance.save()
+    #     details = f"updated {vaccination}s details."
+    #     messages.success(request, 'vaccination updated succesfully!')
+    #     return redirect('vaccination_detail', pk=pk)        
 
-#     vey = NextVaccination.objects.filter(init_vaccination=vaccination)
+    # vey = NextVaccination.objects.filter(init_vaccination=vaccination)
     
 
-#     context = {
-#         "vaccination" : vaccination,
-#         "edit_form": edit_form,
-#         "edit_profile": edit_profile,
-#         "nvacc_form": nvacc_form,
-#         "vey": vey,
-#     } 
-#     return render(request, 'vaccination/detail.html', context)  
+    context = {
+        "vaccination" : vaccination,
+        # "edit_form": edit_form,
+        # "edit_profile": edit_profile,
+        # "nvacc_form": nvacc_form,
+        # "vey": vey,
+    } 
+    return render(request, 'vaccination/detail.html', context)  
 
 
 

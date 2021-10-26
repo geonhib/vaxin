@@ -7,7 +7,7 @@ urlpatterns = [
     path('manufacturers', views.manufacturer_list, name="manufacturers"),
     path('vaccines', views.vaccine_list, name="vaccines"),    
     path('vaccinations', views.vaccination_list, name="vaccinations"),
-    # path('vaccinations/<int:pk>', views.vaccination_detail, name="vaccination_detail"),
+    path('vaccinations/<int:pk>', views.vaccination_detail, name="vaccination_detail"),
 
     # path('next_vaccinations', views.next_vaccination_list, name="next_vaccinations"),
     # path('next_vaccinations/<int:pk>', views.next_vaccination_detail, name="next_vaccination"),    
