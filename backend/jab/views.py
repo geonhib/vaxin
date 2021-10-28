@@ -142,7 +142,7 @@ def vaccination_detail(request, pk):
 
     context = {
         "vaccination" : vaccination,
-        # "edit_form": edit_form,
+        "edit_form": edit_form,
         # "edit_profile": edit_profile,
         # "nvacc_form": nvacc_form,
         # "vey": vey,
