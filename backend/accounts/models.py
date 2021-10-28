@@ -9,12 +9,12 @@ GENDER = (
     ("male", "male"),
 )
 class CustomUser(AbstractUser):
-    telephone = models.CharField(unique=True, max_length=20)
     first_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50, null=True, blank=True)
+    telephone = models.CharField(unique=True, max_length=20)
     gender = models.CharField(max_length=30, choices=GENDER)
     dob = models.DateField(auto_now_add=False, auto_now=False, help_text="Date of Birth")
-    # picture = models.ImageField(upload_to="pictures/", null=True, blank=False)
+    picture = models.ImageField(upload_to="pictures/", null=True, blank=False)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
