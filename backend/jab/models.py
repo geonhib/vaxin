@@ -15,7 +15,7 @@ CENTER_LEVEL = (
 class Facility(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
-    center_level = models.CharField(max_length=60, choices=CENTER_LEVEL, null=True)
+    center_level = models.CharField(max_length=60, choices=CENTER_LEVEL, default='Private Hospital', null=True)
     contact = models.EmailField()
     active  = models.BooleanField(default=False)
 
@@ -66,8 +66,8 @@ DOSAGE_CHOICES = (
     ("missed", "missed")
 )
 class Vaccination(models.Model):   
-    drug = models.ForeignKey(Vaccine, on_delete=models.CASCADE)
     patient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='vaccinatee')
+    drug = models.ForeignKey(Vaccine, on_delete=models.CASCADE)
     jabbed_on = models.DateField(auto_now_add=False, auto_now=False)
     jabbed_at = models.ForeignKey(Facility, on_delete=models.CASCADE)
     jabbed_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='vaccinator')

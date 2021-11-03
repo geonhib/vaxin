@@ -25,7 +25,7 @@ def facility_list(request):
         instance = create_form.save(commit=False)
         instance.active = False
         instance.save()  
-        messages.success(request, 'facility created successful')
+        messages.success(request, 'facility created successfully')
         return redirect('facilities')
     context = {
         "create_form": create_form,
@@ -90,7 +90,7 @@ def vaccination_list(request):
     create_form = VaccinationForm(request.POST or None, request.FILES or None)
     if create_form.is_valid():
         instance = create_form.save(commit=False)
-        instance.jabbed_by = request.user.profile
+        instance.jabbed_by = request.user
         instance.jabbed_on = datetime.date(datetime.now())
         instance.save()                
         messages.success(request, 'Vaccination registered successfully')

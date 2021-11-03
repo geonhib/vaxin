@@ -45,8 +45,89 @@
                         <li class="breadcrumb-item" aria-current="page">Vaccination detail</li>
                     </ol>
                 </nav>
+                
+                <!-- start toast -->
+                <div class="col-md-6 col-lg-6 mb-4">
+                    <div class="toast bg-primary text-white fade show" role="alert" aria-live="assertive"
+                        aria-atomic="true">
+                        <div class="toast-header">
+                            <span class="fab fa-bootstrap me-2"></span>
+                            <strong class="me-auto">Themesberg</strong>
+                            <small>11 mins ago</small>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">
+                            Hello, world! This is a toast message.
+                        </div>
+                    </div>
+                </div>
+                <!-- end toast -->
+                
                 <div class="row">
                     <div class="col-12 mb-4">
+                        <div class="card border-gray-300">
+                            <div class="card-body border-bottom">
+                              <div class="mb-5">
+                                  <div class="row">
+                                      <div class="col-8">
+                                        <div class="mb-4">
+                                            <span class="h5">Vaccination</span>
+                                        </div>
+                                      </div>
+                                        <div class="col-md-4">
+                                            <!-- Button Modal -->
+                                            <div class="d-grid">
+                                                <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-default"><span class="fas fa-plus me-2"></span>Update Vaccination</button>
+                                            </div>
+                                            <!-- Modal Content -->
+                                            <div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h2 class="h6 modal-title">Edit Vaccination</h2>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form method="post">
+                                                                {% csrf_token %}
+                                                                {{ edit_form | crispy }}
+                                                            </form>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary">Save</button>
+                                                            <button type="button" class="btn btn-link ms-auto"
+                                                                data-bs-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End of Modal Content -->
+
+                                        </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-md-4">Drug:</div>
+                                      <div class="col-md-8">{{vaccination.drug|title}}</div>
+                                      <div class="col-md-4">Batch:</div>
+                                      <div class="col-md-8">{{vaccination.drug.batch}}</div>
+                                      <div class="col-md-4">Manufacturer:</div>
+                                      <div class="col-md-8">{{vaccination.drug.manufacturer}}</div>
+                                      <div class="col-md-4">Doses:</div>
+                                      <div class="col-md-8">{{vaccination.drug.doses}} out of {{vaccination.drug.doses}} </div>
+                                      <div class="col-md-4">Adminsistered at:</div>
+                                      <div class="col-md-8">{{vaccination.jabbed_at}}</div>
+                                      <div class="col-md-4">Adminsistered On:</div>
+                                      <div class="col-md-8">{{vaccination.jabbed_on}}</div>
+                                      <div class="col-md-4">Adminsistered by:</div>
+                                      <div class="col-md-8">{{vaccination.jabbed_by|title}}</div>
+                                  </div>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- Next Vaccinations -->
                         <div class="card border-gray-300">
                             <div class="card-body border-bottom">
                               <div class="mb-5">
@@ -79,7 +160,7 @@
                                                             </form>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary">I accept</button>
+                                                            <button type="button" class="btn btn-secondary">Save</button>
                                                             <button type="button" class="btn btn-link ms-auto"
                                                                 data-bs-dismiss="modal">Close</button>
                                                         </div>
@@ -109,7 +190,10 @@
                             </div>
                             </div>
                         </div>
+                        
                     </div>
+
+                    
                 </div>
             </div>
         </div>

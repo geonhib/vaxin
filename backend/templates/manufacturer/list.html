@@ -39,6 +39,7 @@
             </div>
             <div class="col-12 col-lg-8">
                 <nav aria-label="breadcrumb">
+                    <p class="text-center">{% include 'includes/messages.html' %}</p>
                     <ol class="breadcrumb breadcrumb-text-gray breadcrumb-white text-dark">
                         <li class="breadcrumb-item"><a href="#">Home</a></li> 
                         <li class="breadcrumb-item"><a href="#">Manufacturers</a></li>
@@ -76,12 +77,11 @@
                                                             <form method="post">
                                                                 {% csrf_token %}
                                                                 {{ create_form | crispy }}
+                                                                <div class="my-3">
+                                                                    <button type="submit" class="btn btn-success float-end">Save</button>
+                                                                    <button type="button" class="btn btn-primary float-end mx-2" data-bs-dismiss="modal">Close</button>
+                                                                </div>
                                                             </form>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary">Save</button>
-                                                            <button type="button" class="btn btn-link ms-auto"
-                                                                data-bs-dismiss="modal">Close</button>
                                                         </div>
                                                     </div>
                                                 </div>
