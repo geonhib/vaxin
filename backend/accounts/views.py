@@ -28,13 +28,13 @@ def profile(request):
         messages.success(request, 'User updated succesfully!')
         return redirect('profile')
 
-    msgs = Message.objects.filter(user=request.user, category="reminder")[:5]
+    reminders = Message.objects.filter(user=request.user, category="reminder")[:5]
 
     vaccinations = Vaccination.objects.filter(patient=request.user)
     print(vaccinations)
     context = {
         "edit_user": edit_user,
-        "msgs": msgs,
+        "reminders": reminders, 
         "vaccinations": vaccinations,
     }
     return render(request, "account/profile.html", context)
@@ -53,4 +53,8 @@ def dashboard(request):
 
 
 def reminders(request):
-    return render(request, "messages/reminders.html")
+    reminders = Message.objects.filter(user=request.user, category="reminder")
+    context = {
+        "reminders": reminders, 
+    }
+    return render(request, "messages/reminders.html", context)

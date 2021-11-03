@@ -132,21 +132,25 @@
                                                     <div class="table-responsive-sm">
                                                         <table class="table table-striped">
                                                             <tr>
-                                                                <th scope="col" id="teacher2">Patient</th>
-                                                                <th scope="col" id="males2">Message</th>
-                                                                <th scope="col" id="females2">Time</th>
+                                                                {% if request.user.is_superuser %}
+                                                                <th>User</th>
+                                                                {% endif %}
+                                                                <th>Message</th>
+                                                                <th >Time</th>
                                                             </tr>
                                                             
-                                                            {% if msgs %}
-                                                                {% for msg in msgs  %}
+                                                            {% if reminders %}
+                                                                {% for reminder in reminders  %}
                                                                 <tr>
-                                                                    <th scope="row" id="Bolter2" headers="firstyear2 teacher2">{{msg.user|title}}</th>
-                                                                    <td headers="firstyear2 Bolter2 males2">{{msg.content|title}}</td>
-                                                                    <td headers="firstyear2 Bolter2 females2">{{msg.timestamp|naturaltime}}</td>
+                                                                    {% if request.user.is_superuser %}
+                                                                    <th>{{reminder.user|title}}</th>
+                                                                    {% endif %}
+                                                                    <td >{{reminder.content|title}}</td>
+                                                                    <td >{{reminder.timestamp|naturaltime}}</td>
                                                                 </tr>
                                                                 {% endfor %}
                                                             {% else %}
-                                                                No Reminder yet.
+                                                                {{empty}}
                                                             {% endif %}
                                                         </table>
                                                         <p class="text-center mb-0"><a href="{% url 'reminders' %}">View all reminders</a></p>
