@@ -4,6 +4,7 @@ from .models import CustomUser
 from django.contrib.auth import get_user_model
 User = get_user_model()
 from django.forms import widgets
+import datetime
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -27,7 +28,13 @@ class UserForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)
-        self.fields['gender'].placeholder = "admin"
+        self.fields['gender'].placeholder = "Select gender"
+
+    def clean_date(self):
+        date = self.cleaned_data['date']
+        if self.dob > datetime.date.today():
+            raise forms.ValidationError("You birthdate cannot be in the future!")
+        return date
   
     class Meta:
         model = User

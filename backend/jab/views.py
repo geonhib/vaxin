@@ -119,13 +119,11 @@ def vaccination_detail(request, pk):
     vaccination = get_object_or_404(Vaccination, pk=pk) 
     user = User.objects.get(username=request.user.username)
     
-
     edit_profile = UserForm(request.POST, request.FILES, instance=user)
     if edit_profile.is_valid():
         edit_profile.save()
         messages.success(request, 'Profile updated succesfully!')
 
-    # update 
     edit_form = VaccinationForm(request.POST or None, instance=vaccination)
     if edit_form.is_valid():
         edit_form.save()
@@ -133,7 +131,6 @@ def vaccination_detail(request, pk):
         messages.success(request, 'vaccination updated succesfully!')
         return redirect('vaccination_detail')
 
-    
     # next vaccination
     nvacc_form = NextVaccinationForm(request.POST or None)
     if nvacc_form.is_valid():
@@ -158,18 +155,6 @@ def vaccination_detail(request, pk):
         "next_vaccs": next_vaccs,
     } 
     return render(request, 'vaccination/detail.html', context)  
-
-
-
-@login_required(login_url='login') 
-def next_vaccination_list(request): 
-    pass
-
-@login_required(login_url='login') 
-def next_vaccination_detail(request, pk): 
-    pass
-
-
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -206,7 +191,6 @@ def manufacturer_activation(request, pk):
         manufacturer.save()    
         messages.success(request, grant_msg)
     return redirect('manufacturers') 
-
 
 
 @user_passes_test(lambda u: u.is_superuser)
