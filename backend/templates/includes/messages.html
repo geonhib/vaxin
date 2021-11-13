@@ -1,0 +1,30 @@
+
+ {% if messages %}    
+    {% for message in messages %}
+    <div class="toast {{message.tags}} bg-primary text-white fade show" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <span class="fab fa-bootstrap me-2"></span>
+            <strong class="me-auto">Vaxin</strong>
+            <small>1 second ago</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            {{message}}
+        </div>
+    </div>
+    {% endfor %}
+{% endif %}
+
+
+
+<!-- {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+
+    <div class="alert {{message.tags}} alert-dismissible show fade">
+        {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+</ul>
+{% endif %} -->

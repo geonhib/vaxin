@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<!-- Preloader -->
+<div class="section section-lg pt-5 pt-md-7 bg-gray-200">
+    <div class="container">
+        <div class="row pt-5 pt-md-0">
+            {% include 'partials/sidebar.html' %}
+            <div class="col-12 d-lg-none">
+                <div class="card bg-white border-gray-300 mb-4 mb-lg-5">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-10 d-flex">
+                                <a href="./account.html" class="list-group-item list-group-item-action border-0text-center me-2 active">Overview</a>
+                                <a href="./settings.html" class="list-group-item list-group-item-action border-0 text-center me-2">Settings</a>
+                                <a href="./my-items.html" class="list-group-item list-group-item-action border-0 text-center me-2 d-none d-sm-block border-0">My Items</a>
+                                <a href="./security.html" class="list-group-item list-group-item-action border-0 text-center d-none d-md-block border-0">Security</a>
+                            </div>
+                            <div class="col-2 d-flex justify-content-center">
+                                <div class="btn-group dropleft">
+                                    <button class="btn btn-link dropdown-toggle dropdown-toggle-split me-2 m-0 p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="icon icon-sm"><span
+                                                class="fas fa-ellipsis-h icon-secondary fa-lg"></span>
+                                        </span><span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a href="./my-items.html" class="list-group-item list-group-item-action d-sm-none border-0">My Items</a>
+                                        <a href="./security.html" class="list-group-item list-group-item-action d-md-none border-0">Security</a>
+                                        <a href="./billing.html" class="list-group-item list-group-item-action border-0">Billing</a>
+                                        <a href="./messages.html" class="list-group-item list-group-item-action border-0">Messages</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8">
+                 <!-- Toast -->
+                 <p class="text-center">{% include 'includes/messages.html' %}</p>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-text-gray breadcrumb-white text-dark">
+                        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li> 
+                        <li class="breadcrumb-item"><a href="{% url 'vaccinations' %}">Vaccinations</a></li>
+                        <li class="breadcrumb-item" aria-current="page">Vaccination details</li>
+                    </ol>
+                </nav>
+                
+                <div class="row">
+                    <div class="col-12 mb-4">
+                        <div class="card border-gray-300">
+                            <div class="card-body border-bottom">
+                              <div class="mb-5">
+                                  <div class="row">
+                                      <div class="col-8">
+                                        <div class="mb-4">
+                                            <span class="h5">First Dose</span>
+                                        </div>
+                                      </div>
+                                        <div class="col-md-4">
+                                            <!-- Button Modal -->
+                                            <div class="d-grid">
+                                                {% comment %}
+                                                <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-default"><span class="fas fa-plus me-2"></span>Update Vaccination
+                                                </button>
+                                                {% endcomment %}
+                                            </div>
+                                            <!-- Modal Content -->
+                                            <div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h2 class="h6 modal-title">Edit Vaccination</h2>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form method="post">
+                                                                {% csrf_token %}
+                                                                {{ edit_form | crispy }}
+                                                            </form>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary">Save</button>
+                                                            <button type="button" class="btn btn-link ms-auto"
+                                                                data-bs-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End of Modal Content -->
+
+                                        </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-md-4">Drug:</div>
+                                      <div class="col-md-8">{{vaccination.drug|title}}</div>
+                                      <div class="col-md-4">Batch:</div>
+                                      <div class="col-md-8">{{vaccination.drug.batch}}</div>
+                                      <div class="col-md-4">Manufacturer:</div>
+                                      <div class="col-md-8">{{vaccination.drug.manufacturer}}</div>
+                                      <div class="col-md-4">Doses:</div>
+                                      <div class="col-md-8">{{vaccination.drug.doses}} out of {{vaccination.drug.doses}} </div>
+                                      <div class="col-md-4">Adminsistered at:</div>
+                                      <div class="col-md-8">{{vaccination.jabbed_at}}</div>
+                                      <div class="col-md-4">Adminsistered On:</div>
+                                      <div class="col-md-8">{{vaccination.jabbed_on}}</div>
+                                      <div class="col-md-4">Adminsistered by:</div>
+                                      <div class="col-md-8">{{vaccination.jabbed_by|title}}</div>
+                                  </div>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- Next Vaccinations -->
+                        <div class="card border-gray-300">
+                            <div class="card-body border-bottom">
+                              <div class="mb-5">
+                                  <div class="row">
+                                      <div class="col-8">
+                                        <h5 class="mt-2">Follow-up doses</h5>
+                                      </div>
+                                        <div class="col-md-4">
+                                            <!-- Button Modal -->
+                                            {% comment %}
+                                            <div class="d-grid">
+                                                <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
+                                                    data-bs-target="#nvacc-modal"><span class="fas fa-plus me-2"></span>Add New
+                                                </button>
+                                            </div>
+                                            {% endcomment %}
+                                            <!-- Modal Content -->
+                                            <div class="modal fade" id="nvacc-modal" tabindex="-1" role="dialog" aria-labelledby="modal-default"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h2 class="h6 modal-title">Next Vaccination Dose</h2>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form method="post">
+                                                                {% csrf_token %}
+                                                                {{ nvacc_form | crispy }}
+                                                                <div class="my-3">
+                                                                    <button type="submit" class="btn btn-success float-end">Save</button>
+                                                                    <button type="button" class="btn btn-primary float-end mx-2" data-bs-dismiss="modal">Close</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End of Modal Content -->
+
+                                        </div>
+                                  </div>
+                                  <div class="row">
+                                      {% for nvac in next_vaccs  %}
+                                        <div class="my-3">
+                                            <span class="h5">Next Dose</span>
+                                        </div>
+
+                                      <div class="col-md-4">Drug:</div>
+                                      <div class="col-md-8">{{nvac.drug|title}}</div>
+                                      <div class="col-md-4">Batch:</div>
+                                      <div class="col-md-8">{{nvac.drug.batch}}</div>
+                                      <div class="col-md-4">Manufacturer:</div>
+                                      <div class="col-md-8">{{nvac.drug.manufacturer}}</div>
+                                      <div class="col-md-4">Doses:</div>
+                                      <div class="col-md-8">{{nvac.drug.doses}} out of {{nvac.drug.doses}} </div>
+                                      <div class="col-md-4">Adminsistered at:</div>
+                                      <div class="col-md-8">{{nvac.jabbed_at}}</div>
+                                      <div class="col-md-4">Adminsistered On:</div>
+                                      <div class="col-md-8">{{nvac.jabbed_on}}</div>
+                                      <div class="col-md-4">Adminsistered by:</div>
+                                      <div class="col-md-8">{{nvac.jabbed_by|title}}</div>
+                                      <hr class="my-3">
+                                      {% endfor %}
+                                      
+                                      <div class="d-grid">
+                                        <button type="button" class="btn btn-primary my-2" data-bs-toggle="modal"
+                                            data-bs-target="#nvacc-modal"><span class="fas fa-plus me-2"></span>Register new vaccination dose</button>
+                                    </div>
+
+                                  </div>
+                            </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+    

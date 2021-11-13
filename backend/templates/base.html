@@ -11,26 +11,12 @@
     <meta name="description"
         content="Premium Bootstrap 5 UI Kit featuring over 1000 components and 35 example pages created by Themesberg." />
     <meta name="keywords"
-        content="bootstrap, bootstrap ui kit, premium Bootstrap 5 UI Kit, bootstrap dashboard, bootstrap messaging, 
-        bootstrap billing, bootstrap item list, bootstrap charts, bootstrap timelines, bootstrap cards, bootstrap 
-        pricing cards, bootstrap profile cards, bootstrap 5, gulp, npm, sass, javascript, jquery, themesberg, 
-        Bootstrap 5 UI Kit theme, Bootstrap 5 UI Kit, premium bootstrap ui kit, bootstrap design system, 
-        themesberg ui kit, pixel ui kit, pixel pro ui kit" />
-    <link rel="canonical" href="https://themesberg.com/product/ui-kit/pixel-pro-premium-bootstrap-5-ui-kit" />
+        content="bootstrap, bootstrap ui kit" />
+    <link rel="canonical" href="#" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://demo.themesberg.com/pixel-pro" />
     <meta property="og:title" content="Pixel Pro - My Account" />
-    <meta property="og:description"
-        content="Premium Bootstrap 5 UI Kit featuring over 1000 components and 35 example pages created by Themesberg." />
-    <meta property="og:image"
-        content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/pixel-pro/pixel-pro-preview.jpg" />
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://demo.themesberg.com/pixel-pro" />
-    <meta property="twitter:title" content="Pixel Pro - My Account" />
-    <meta property="twitter:description"
-        content="Premium Bootstrap 5 UI Kit featuring over 1000 components and 35 example pages created by Themesberg." />
-    <meta property="twitter:image"
-        content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/pixel-pro/pixel-pro-preview.jpg" />
+    
     <link rel="apple-touch-icon" sizes="120x120" href="../../assets/img/favicon/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon/favicon-16x16.png" />
@@ -39,6 +25,11 @@
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="theme-color" content="#ffffff" />
 
+    <!-- datatables -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css"> -->
+    <link rel="stylesheet" href="{% static 'vendor/simple-datatables/style.css' %}">
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
     <link type="text/css" href="{% static 'vendor/@fortawesome/fontawesome-free/css/all.min.css' %}" rel="stylesheet" />
     <link rel="stylesheet" href="{% static 'vendor/@glidejs/glide/dist/css/glide.core.min.css' %}" />
     <link rel="stylesheet" href="{% static 'vendor/@glidejs/glide/dist/css/glide.theme.min.css' %}" />
@@ -54,6 +45,15 @@
         {% endblock content %}
     </main>
     {% include 'partials/footer.html' %}
+
+    <!-- Datatables -->
+    <script src="{% static 'vendor/simple-datatables/simple-datatables.js' %}"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script> -->
+    <script>
+        let table1 = document.querySelector('#table1');
+        let dataTable = new simpleDatatables.DataTable(table1);
+    </script>
+
     <script src="{% static 'vendor/@popperjs/core/dist/umd/popper.min.js' %}"></script>
     <script src="{% static 'vendor/bootstrap/dist/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'vendor/headroom.js/dist/headroom.min.js' %}"></script>

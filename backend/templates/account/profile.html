@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <!-- Preloader -->
@@ -37,6 +39,15 @@
                 </div>
             </div>
             <div class="col-12 col-lg-8">
+                   <!-- Toast -->
+                   <p class="text-center">{% include 'includes/messages.html' %}</p>
+                   <!-- End Toast -->
+                   <nav aria-label="breadcrumb">
+                       <ol class="breadcrumb breadcrumb-text-gray breadcrumb-white text-dark">
+                           <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li> 
+                           <li class="breadcrumb-item activ" aria-current="page">Profile</li>
+                       </ol>
+                   </nav>
                 <div class="row">
                     <div class="col-12 mb-4">
                         <div class="card border-gray-300">
@@ -56,12 +67,12 @@
                                                     href="#tabs-text-1" role="tab" aria-controls="tabs-text-1" aria-selected="true">
                                                     <span class="far fa-clock me-2"></span>Reminders</a>
                                             </li>
-                                            <li class="nav-item">
+                                            <!-- <li class="nav-item">
                                                 <a class="nav-link mb-sm-3 mb-md-0" id="tabs-text-3-tab" data-bs-toggle="tab"
                                                     href="#tabs-text-3" role="tab" aria-controls="tabs-text-3"
                                                     aria-selected="false">
                                                     <span class="far fa-envelope me-2"></span>Messages</a>
-                                            </li>
+                                            </li> -->
                                         </ul>
                                     </div>
                                     <!-- End of Tab Nav -->
@@ -75,33 +86,93 @@
                                                         <div class="col-md-6">
                                                             <div class="row">
                                                                 <div class="col-md-5">First Name:</div>
-                                                                <div class="col-md-7">George</div>
+                                                                <div class="col-md-7">{{user.first_name|title}}</div>
                                                                 <div class="col-md-5">Last Name:</div>
-                                                                <div class="col-md-7">onen</div>
+                                                                <div class="col-md-7">{{user.last_name|title}}</div>
                                                                 <div class="col-md-5">Gender:</div>
-                                                                <div class="col-md-7">Male</div>
+                                                                <div class="col-md-7">{{user.gender|title}}</div>
                                                                 <div class="col-md-5">Date of Birth:</div>
-                                                                <div class="col-md-7">13/02/1990</div>
+                                                                <div class="col-md-7">{{user.dob}}</div>
                                                             </div>
                                                         </div>
                                                         <!-- half page -->
-                                                        <div class="col-md-6"></div>
+                                                        <div class="col-md-6">
+                                                            <!-- start modal -->
+                                                                <!-- Button Modal -->
+                                                                <!-- <div class="d-grid">
+                                                                    <button type="button" class="btn btn-outline-primary mb-3" data-bs-toggle="modal"
+                                                                        data-bs-target="#modal-default"><span class="fas fa-plus me-2"></span>Add New</button>
+                                                                </div> -->
+                                                                <button class="btn btn-gray-300 btn-xs" data-bs-toggle="modal" data-bs-target="#modal-default">
+                                                                    <span class="me-2"><span class="fas fa-edit"></span></span>Update</button>
+                                                                <!-- Modal Content -->
+                                                                <div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default"
+                                                                    aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h2 class="h6 modal-title">Update my profile</h2>
+                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                                    aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <form method="POST" novalidate enctype="multipart/form-data">
+                                                                                    {% csrf_token %}
+                                                                                    {{ edit_user | crispy }}
+                                                                                    <div class="my-3">
+                                                                                        <button type="submit" class="btn btn-success float-end">Save</button>
+                                                                                        <button type="button" class="btn btn-primary float-end mx-2" data-bs-dismiss="modal">Close</button>
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                                                            <!-- <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-secondary">I accept</button>
+                                                                                <button type="button" class="btn btn-link ms-auto" data-bs-dismiss="modal">Close</button>
+                                                                            </div> -->
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- End of Modal Content -->
+                                                            <!-- end modal -->
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="tab-pane fade show" id="tabs-text-1" role="tabpanel"
                                                     aria-labelledby="tabs-text-1-tab">
-                                                    <p>Be reminded that small batch freegan sed.
-                                                        Craft beer elit seitan exercitation, photo booth et 8-bit kale chips proident
-                                                        chillwave deep v laborum. Aliquip veniam delectus,
-                                                        Marfa eiusmod Pinterest in do umami readymade swag.</p>
+                                                    <div class="table-responsive-sm">
+                                                        <table class="table table-striped">
+                                                            <tr>
+                                                                {% if request.user.is_superuser %}
+                                                                <th>User</th>
+                                                                {% endif %}
+                                                                <th>Message</th>
+                                                                <th >Time</th>
+                                                            </tr>
+                                                            
+                                                            {% if reminders %}
+                                                                {% for reminder in reminders  %}
+                                                                <tr>
+                                                                    {% if request.user.is_superuser %}
+                                                                    <th>{{reminder.user|title}}</th>
+                                                                    {% endif %}
+                                                                    <td >{{reminder.content|title}}</td>
+                                                                    <td >{{reminder.timestamp|naturaltime}}</td>
+                                                                </tr>
+                                                                {% endfor %}
+                                                            {% else %}
+                                                                {{empty}}
+                                                            {% endif %}
+                                                        </table>
+                                                        <p class="text-center mb-0"><a href="{% url 'reminders' %}">View all reminders</a></p>
+                                                    </div>
                                                 </div>
-                                                <div class="tab-pane fade" id="tabs-text-3" role="tabpanel"
+                                                <!-- <div class="tab-pane fade" id="tabs-text-3" role="tabpanel"
                                                     aria-labelledby="tabs-text-3-tab">
                                                     <p>Exercitation photo booth stumptown tote bag Banksy, elit small batch freegan sed.
                                                         Craft beer elit seitan exercitation, photo booth et 8-bit kale chips proident
                                                         chillwave deep v laborum. Aliquip veniam delectus,
                                                         Marfa eiusmod Pinterest in do umami readymade swag.</p>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                     </div>
@@ -114,76 +185,42 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-4 mb-4">
-                        <div class="card border-gray-300">
-                            <div class="card-body d-flex flex-row align-items-center flex-0 border-bottom">
-                                <div class="d-block">
-                                    <div class="h6 fw-normal text-gray mb-2">
-                                        Reminder sent
+                    {% if vaccinations %}
+                        {% for vaccination in vaccinations  %}
+                        <div class="col-12 col-md-4 mb-4">
+                            <a href="{% url 'vaccination_detail' vaccination.id %}">
+                                <div class="card border-gray-300">
+                                    <div class="card-body d-flex flex-row align-items-center flex-0 border-bottom">
+                                        <div class="d-block">
+                                            <div class="h6 fw-normal text-gray mb-2">
+                                                Reminder Sent
+                                            </div>
+                                            <h2 class="h5">{{vaccination.drug|title}}</h2>
+                                            <div class="d-flex align-items-center text-right">
+                                            {% if vaccination.dose == "soon" %}
+                                                <span class="shape-xs rounded-circle bg-info me-2"></span>
+                                                <span class="fw-normal small">Missed</span>
+                                            {% elif vaccination.dose == "taken" %}
+                                                <span class="shape-xs rounded-circle bg-success me-2"></span>
+                                                <span class="fw-normal small">To be taken</span>
+                                            {% else %}
+                                                <span class="shape-xs rounded-circle bg-danger me-2"></span>
+                                                <span class="fw-normal small">Missed</span>
+                                            {% endif %}
+                                                
+                                            </div>
+                                        </div>
                                     </div>
-                                    <h2 class="h5">Rubella</h2>
-                                    <div class="d-flex align-items-center text-right">
-                                        <span class="shape-xs rounded-circle bg-info me-2"></span>
-                                        <span class="fw-normal small">Missed</span>
-                                    </div>
-                                    <!-- <div class="d-flex align-items-center text-right mb-2">
-                                        <span class="shape-xs rounded-circle bg-success me-2"></span>
-                                        <span class="fw-normal small">Complete</span>
-                                    </div>
-                                    <div class="d-flex align-items-center text-right">
-                                        <span class="shape-xs rounded-circle bg-info me-2"></span>
-                                        <span class="fw-normal small">Incoming</span>
-                                    </div>
-                                    <div class="d-flex align-items-center text-right">
-                                        <span class="shape-xs rounded-circle bg-danger me-2"></span>
-                                        <span class="fw-normal small">Missed</span>
-                                    </div> -->
-                                </div>
-                            </div>
-                            <div class="card-body p-2">
-                                <div class="ct-chart-5 ct-golden-section ct-series-e"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 mb-4">
-                        <div class="card border-gray-300">
-                            <div class="card-body d-flex flex-row align-items-center flex-0 border-bottom">
-                                <div class="d-block">
-                                    <div class="h6 fw-normal text-gray mb-2">
-                                        Reminder Sent
-                                    </div>
-                                    <h2 class="h5">Yellow Fever</h2>
-                                    <div class="d-flex align-items-center text-right">
-                                        <span class="shape-xs rounded-circle bg-danger me-2"></span>
-                                        <span class="fw-normal small">Missed</span>
+                                    <div class="card-body p-2">
+                                        <div class="ct-chart-5 ct-golden-section ct-series-e"></div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card-body p-2">
-                                <div class="ct-chart-5 ct-golden-section ct-series-e"></div>
-                            </div>
+                            </a>
                         </div>
-                    </div>
-                    <div class="col-12 col-md-4 mb-4">
-                        <div class="card border-gray-300">
-                            <div class="card-body d-flex flex-row align-items-center flex-0 border-bottom">
-                                <div class="d-block">
-                                    <div class="h6 fw-normal text-gray mb-2">
-                                        Well Done!
-                                    </div>
-                                    <h2 class="h5">Hepatitis B</h2>
-                                    <div class="d-flex align-items-center text-right">
-                                        <span class="shape-xs rounded-circle bg-success me-2"></span>
-                                        <span class="fw-normal small">Missed</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body p-2">
-                                <div class="ct-chart-5 ct-golden-section ct-series-e"></div>
-                            </div>
-                        </div>
-                    </div>
-                    
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-center">No vaccination adminsistered yet</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -191,3 +228,5 @@
 </div>
 {% endblock content %}
     
+
+

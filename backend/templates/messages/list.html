@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Preloader -->
+<div class="section section-lg pt-5 pt-md-7 bg-gray-200">
+    <div class="container">
+        <div class="row pt-5 pt-md-0">
+            {% include 'partials/sidebar.html' %}
+            <div class="col-12 d-lg-none">
+                <div class="card bg-white border-gray-300 mb-4 mb-lg-5">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-10 d-flex">
+                                <a href="./account.html" class="list-group-item list-group-item-action border-0text-center me-2 active">Overview</a>
+                                <a href="./settings.html" class="list-group-item list-group-item-action border-0 text-center me-2">Settings</a>
+                                <a href="./my-items.html" class="list-group-item list-group-item-action border-0 text-center me-2 d-none d-sm-block border-0">My Items</a>
+                                <a href="./security.html" class="list-group-item list-group-item-action border-0 text-center d-none d-md-block border-0">Security</a>
+                            </div>
+                            <div class="col-2 d-flex justify-content-center">
+                                <div class="btn-group dropleft">
+                                    <button class="btn btn-link dropdown-toggle dropdown-toggle-split me-2 m-0 p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="icon icon-sm"><span
+                                                class="fas fa-ellipsis-h icon-secondary fa-lg"></span>
+                                        </span><span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a href="./my-items.html" class="list-group-item list-group-item-action d-sm-none border-0">My Items</a>
+                                        <a href="./security.html" class="list-group-item list-group-item-action d-md-none border-0">Security</a>
+                                        <a href="./billing.html" class="list-group-item list-group-item-action border-0">Billing</a>
+                                        <a href="./messages.html" class="list-group-item list-group-item-action border-0">Messages</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-text-gray breadcrumb-white text-dark">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li> 
+                        <li class="breadcrumb-item"><a href="#">Manufacturers</a></li>
+                        <!-- <li class="breadcrumb-item active" aria-current="page">Manufacters</li> -->
+                    </ol>
+                </nav>
+                <div class="row">
+                    <div class="col-12 mb-4">
+                        <div class="card border-gray-300">
+                            <div class="card-body border-bottom">
+                              <div class="mb-5">
+                                  <div class="row">
+                                      <div class="col-8">
+                                        <div class="mb-4">
+                                            <span class="h5">Health Facilities</span>
+                                        </div>
+                                      </div>
+                                        <div class="col-md-4">
+                                            <!-- Button Modal -->
+                                            <div class="d-grid">
+                                                <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-default"><span class="fas fa-plus me-2"></span>Add New</button>
+                                            </div>
+                                            <!-- Modal Content -->
+                                            <div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h2 class="h6 modal-title">Terms of Service</h2>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>With less than a month to go before the European Union enacts new consumer privacy
+                                                                laws for its citizens, companies around the world are updating their terms of
+                                                                service agreements to comply.</p>
+                                                            <p>The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect
+                                                                on May 25 and is meant to ensure a common set of data rights in the European Union.
+                                                                It requires organizations to notify users as
+                                                                soon as possible of high-risk data breaches that could personally affect them.</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary">I accept</button>
+                                                            <button type="button" class="btn btn-link ms-auto"
+                                                                data-bs-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End of Modal Content -->
+
+                                        </div>
+                                  </div>
+
+                                <div class="table-responsive-sm">
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <th scope="col" id="class2">Health Facility</th>
+                                            <th scope="col" id="teacher2">Health Facility</th>
+                                            <th scope="col" id="males2">Contact</th>
+                                            <th scope="col" id="females2">Females</th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" id="firstyear2" rowspan="2">First Year</th>
+                                            <th scope="row" id="Bolter2" headers="firstyear2 teacher2">D. Bolter</th>
+                                            <td headers="firstyear2 Bolter2 males2">5</td>
+                                            <td headers="firstyear2 Bolter2 females2">4</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" id="Cheetham2" headers="firstyear2 teacher2">A. Cheetham</th>
+                                            <td headers="firstyear2 Cheetham2 males2">7</td>
+                                            <td headers="firstyear2 Cheetham2 females2">9</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" id="secondyear2" rowspan="3">Second Year</th>
+                                            <th scope="row" id="Lam2" headers="secondyear2 teacher2">M. Lam</th>
+                                            <td headers="secondyear2 Lam2 males2">3</td>
+                                            <td headers="secondyear2 Lam2 females2">9</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" id="Crossy2" headers="secondyear2 teacher2">S. Crossy</th>
+                                            <td headers="secondyear2 Crossy2 males2">4</td>
+                                            <td headers="secondyear2 Crossy2 females2">3</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+    

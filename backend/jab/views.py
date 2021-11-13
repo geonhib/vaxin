@@ -1,14 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import activate
-from .models import Facility, Manufacturer, Vaccine, Vaccination
-from django.conf import settings
-User=settings.AUTH_USER_MODEL
-from .forms import FacilityForm, ManufacturerForm, VaccineForm, VaccinationForm
+from django.contrib.auth import get_user_model
+User = get_user_model()
+from .models import Facility, Manufacturer, Vaccine, Batch, Vaccination, NextVaccination
+from .forms import FacilityForm, ManufacturerForm, VaccineForm, BatchForm, VaccinationForm, NextVaccinationForm
 # from account.forms import ProfileForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 from datetime import datetime
+from accounts.forms import UserForm
 
 
 @login_required(login_url='login') 
@@ -24,7 +25,7 @@ def facility_list(request):
         instance = create_form.save(commit=False)
         instance.active = False
         instance.save()  
-        messages.success(request, 'facility created successful')
+        messages.success(request, 'facility created successfully')
         return redirect('facilities')
     context = {
         "create_form": create_form,
@@ -78,7 +79,17 @@ def vaccine_list(request):
         "vaccines": vaccines,
         "vaccine_count": vaccine_count
     }
-    return render(request, 'vaccine/list.html', context)  
+    return render(request, 'vaccine/list.html', context) 
+
+
+def vaccine_detail(request, pk):
+    vaccine = get_object_or_404(Vaccine, pk=pk)
+    batches = Batch.objects.filter(drug=vaccine)
+    context = {
+        "vaccine": vaccine,
+        "batches": batches,
+    }
+    return render(request, 'vaccine/detail.html', context)
 
 
 @login_required(login_url='login') 
@@ -89,7 +100,7 @@ def vaccination_list(request):
     create_form = VaccinationForm(request.POST or None, request.FILES or None)
     if create_form.is_valid():
         instance = create_form.save(commit=False)
-        instance.jabbed_by = request.user.profile
+        instance.jabbed_by = request.user
         instance.jabbed_on = datetime.date(datetime.now())
         instance.save()                
         messages.success(request, 'Vaccination registered successfully')
@@ -103,132 +114,116 @@ def vaccination_list(request):
     return render(request, 'vaccination/list.html', context)  
 
 
-# @login_required(login_url='login') 
-# def vaccination_detail(request, pk): 
-#     vaccination = get_object_or_404(Vaccination, pk=pk) 
-#     profile = User.objects.get(user=request.user)
+@login_required(login_url='login') 
+def vaccination_detail(request, pk): 
+    vaccination = get_object_or_404(Vaccination, pk=pk) 
+    user = User.objects.get(username=request.user.username)
+    
+    edit_profile = UserForm(request.POST, request.FILES, instance=user)
+    if edit_profile.is_valid():
+        edit_profile.save()
+        messages.success(request, 'Profile updated succesfully!')
+
+    edit_form = VaccinationForm(request.POST or None, instance=vaccination)
+    if edit_form.is_valid():
+        edit_form.save()
+        details = f"updated {vaccination}s details."
+        messages.success(request, 'vaccination updated succesfully!')
+        return redirect('vaccination_detail')
+
+    # next vaccination
+    nvacc_form = NextVaccinationForm(request.POST or None)
+    if nvacc_form.is_valid():
+        instance = nvacc_form.save(commit=False)
+        instance.init_vaccination = Vaccination.objects.get(pk=pk)
+        instance.drug = vaccination.drug
+        instance.jabbed_by = request.user
+        instance.jabbed_on = datetime.date(datetime.now())
+        instance.save()
+        details = f"updated {vaccination}s details."
+        messages.success(request, 'vaccination updated succesfully!')
+        return redirect('vaccination_detail', pk=pk)        
+
+    next_vaccs = NextVaccination.objects.filter(init_vaccination=vaccination)
     
 
-#     edit_profile = ProfileForm(request.POST, request.FILES, instance=profile)
-#     if edit_profile.is_valid():
-#         edit_profile.save()
-#         messages.success(request, 'Profile updated succesfully!')
-
-#     # update 
-#     edit_form = VaccinationForm(request.POST or None, instance=vaccination)
-#     if edit_form.is_valid():
-#         edit_form.save()
-#         details = f"updated {vaccination}s details."
-#         messages.success(request, 'vaccination updated succesfully!')
-#         return redirect('vaccination_detail')
-
-    
-#     # next vaccination
-#     nvacc_form = NextVaccinationForm(request.POST or None)
-#     if nvacc_form.is_valid():
-#         instance = nvacc_form.save(commit=False)
-#         instance.init_vaccination = Vaccination.objects.get(pk=pk)
-#         instance.drug = vaccination.drug
-#         instance.jabbed_by = request.user.profile
-#         instance.jabbed_on = datetime.date(datetime.now())
-#         instance.save()
-#         details = f"updated {vaccination}s details."
-#         messages.success(request, 'vaccination updated succesfully!')
-#         return redirect('vaccination_detail', pk=pk)        
-
-#     vey = NextVaccination.objects.filter(init_vaccination=vaccination)
-    
-
-#     context = {
-#         "vaccination" : vaccination,
-#         "edit_form": edit_form,
-#         "edit_profile": edit_profile,
-#         "nvacc_form": nvacc_form,
-#         "vey": vey,
-#     } 
-#     return render(request, 'vaccination/detail.html', context)  
+    context = {
+        "vaccination" : vaccination,
+        "edit_form": edit_form,
+        # "edit_profile": edit_profile,
+        "nvacc_form": nvacc_form,
+        "next_vaccs": next_vaccs,
+    } 
+    return render(request, 'vaccination/detail.html', context)  
 
 
-
-# @login_required(login_url='login') 
-# def next_vaccination_list(request): 
-#     pass
-
-# @login_required(login_url='login') 
-# def next_vaccination_detail(request, pk): 
-#     pass
-
-
-
-
-# @user_passes_test(lambda u: u.is_superuser)
-# @login_required(login_url='login') 
-# def facility_activation(request, pk):
-#     facility = get_object_or_404(Facility, pk=pk)
-#     grant_msg = f"facility approved"
-#     revoke_msg = f"facility revoked"    
-#     if facility.active == True:
-#         facility.active = False
-#         facility.save()
-#         messages.warning(request, revoke_msg)
-#     else:
-#         facility.active == False
-#         facility.active = True
-#         facility.save()    
-#         messages.success(request, grant_msg)
-#     return redirect('facilities') 
+@user_passes_test(lambda u: u.is_superuser)
+@login_required(login_url='login') 
+def facility_activation(request, pk):
+    facility = get_object_or_404(Facility, pk=pk)
+    grant_msg = f"facility approved"
+    revoke_msg = f"facility revoked"    
+    if facility.active == True:
+        facility.active = False
+        facility.save()
+        messages.warning(request, revoke_msg)
+    else:
+        facility.active == False
+        facility.active = True
+        facility.save()    
+        messages.success(request, grant_msg)
+    return redirect('facilities') 
 
 
-# @user_passes_test(lambda u: u.is_superuser)
-# @login_required(login_url='login') 
-# def manufacturer_activation(request, pk):
-#     manufacturer = get_object_or_404(Manufacturer, pk=pk)
-#     grant_msg = f"manufacturer approved"
-#     revoke_msg = f"manufacturer revoked"    
-#     if manufacturer.approved == True:
-#         manufacturer.approved = False
-#         manufacturer.save()
-#         messages.warning(request, revoke_msg)
-#     else:
-#         manufacturer.approved == False
-#         manufacturer.approved = True
-#         manufacturer.save()    
-#         messages.success(request, grant_msg)
-#     return redirect('manufacturers') 
+@user_passes_test(lambda u: u.is_superuser)
+@login_required(login_url='login') 
+def manufacturer_activation(request, pk):
+    manufacturer = get_object_or_404(Manufacturer, pk=pk)
+    grant_msg = f"manufacturer approved"
+    revoke_msg = f"manufacturer revoked"    
+    if manufacturer.approved == True:
+        manufacturer.approved = False
+        manufacturer.save()
+        messages.warning(request, revoke_msg)
+    else:
+        manufacturer.approved == False
+        manufacturer.approved = True
+        manufacturer.save()    
+        messages.success(request, grant_msg)
+    return redirect('manufacturers') 
 
 
+@user_passes_test(lambda u: u.is_superuser)
+@login_required(login_url='login') 
+def manufacturer_activation(request, pk):
+    manufacturer = get_object_or_404(Manufacturer, pk=pk)
+    grant_msg = f"manufacturer approved"
+    revoke_msg = f"manufacturer revoked"    
+    if manufacturer.approved == True:
+        manufacturer.approved = False
+        manufacturer.save()
+        messages.warning(request, revoke_msg)
+    else:
+        manufacturer.approved == False
+        manufacturer.approved = True
+        manufacturer.save()    
+        messages.success(request, grant_msg)
+    return redirect('manufacturers') 
 
-# @user_passes_test(lambda u: u.is_superuser)
-# @login_required(login_url='login') 
-# def manufacturer_activation(request, pk):
-#     manufacturer = get_object_or_404(Manufacturer, pk=pk)
-#     grant_msg = f"manufacturer approved"
-#     revoke_msg = f"manufacturer revoked"    
-#     if manufacturer.approved == True:
-#         manufacturer.approved = False
-#         manufacturer.save()
-#         messages.warning(request, revoke_msg)
-#     else:
-#         manufacturer.approved == False
-#         manufacturer.approved = True
-#         manufacturer.save()    
-#         messages.success(request, grant_msg)
-#     return redirect('manufacturers') 
 
-
-# @user_passes_test(lambda u: u.is_superuser)
-# @login_required(login_url='login') 
-# def vaccine_activation(request, pk):
-#     vaccine = get_object_or_404(Vaccine, pk=pk)
-#     grant_msg = f"vaccine approved"
-#     revoke_msg = f"vaccine revoked"    
-#     if vaccine.approved == True:
-#         vaccine.approved = False
-#         vaccine.save()
-#         messages.warning(request, revoke_msg)
-#     else:
-#         vaccine.approved == False
-#         vaccine.approved = True
-#         vaccine.save()    
-#         messages.success(request, grant_msg)
-#     return redirect('vaccines') 
+@user_passes_test(lambda u: u.is_superuser)
+@login_required(login_url='login') 
+def vaccine_activation(request, pk):
+    vaccine = get_object_or_404(Vaccine, pk=pk)
+    grant_msg = f"vaccine approved"
+    revoke_msg = f"vaccine revoked"    
+    if vaccine.approved == True:
+        vaccine.approved = False
+        vaccine.save()
+        messages.warning(request, revoke_msg)
+    else:
+        vaccine.approved == False
+        vaccine.approved = True
+        vaccine.save()    
+        messages.success(request, grant_msg)
+    return redirect('vaccines') 
