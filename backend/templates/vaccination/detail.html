@@ -38,30 +38,15 @@
                 </div>
             </div>
             <div class="col-12 col-lg-8">
+                 <!-- Toast -->
+                 <p class="text-center">{% include 'includes/messages.html' %}</p>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-text-gray breadcrumb-white text-dark">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li> 
+                        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li> 
                         <li class="breadcrumb-item"><a href="{% url 'vaccinations' %}">Vaccinations</a></li>
-                        <li class="breadcrumb-item" aria-current="page">Vaccination detail</li>
+                        <li class="breadcrumb-item" aria-current="page">Vaccination details</li>
                     </ol>
                 </nav>
-                
-                <!-- start toast -->
-                <div class="col-md-6 col-lg-6 mb-4">
-                    <div class="toast bg-primary text-white fade show" role="alert" aria-live="assertive"
-                        aria-atomic="true">
-                        <div class="toast-header">
-                            <span class="fab fa-bootstrap me-2"></span>
-                            <strong class="me-auto">Themesberg</strong>
-                            <small>11 mins ago</small>
-                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                        </div>
-                        <div class="toast-body">
-                            Hello, world! This is a toast message.
-                        </div>
-                    </div>
-                </div>
-                <!-- end toast -->
                 
                 <div class="row">
                     <div class="col-12 mb-4">
@@ -71,14 +56,17 @@
                                   <div class="row">
                                       <div class="col-8">
                                         <div class="mb-4">
-                                            <span class="h5">Vaccination</span>
+                                            <span class="h5">First Dose</span>
                                         </div>
                                       </div>
                                         <div class="col-md-4">
                                             <!-- Button Modal -->
                                             <div class="d-grid">
+                                                {% comment %}
                                                 <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
-                                                    data-bs-target="#modal-default"><span class="fas fa-plus me-2"></span>Update Vaccination</button>
+                                                    data-bs-target="#modal-default"><span class="fas fa-plus me-2"></span>Update Vaccination
+                                                </button>
+                                                {% endcomment %}
                                             </div>
                                             <!-- Modal Content -->
                                             <div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default"
@@ -133,36 +121,36 @@
                               <div class="mb-5">
                                   <div class="row">
                                       <div class="col-8">
-                                        <div class="mb-4">
-                                            <span class="h5">Vaccination</span>
-                                        </div>
+                                        <h5 class="mt-2">Follow-up doses</h5>
                                       </div>
                                         <div class="col-md-4">
                                             <!-- Button Modal -->
+                                            {% comment %}
                                             <div class="d-grid">
                                                 <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
-                                                    data-bs-target="#modal-default"><span class="fas fa-plus me-2"></span>Add New</button>
+                                                    data-bs-target="#nvacc-modal"><span class="fas fa-plus me-2"></span>Add New
+                                                </button>
                                             </div>
+                                            {% endcomment %}
                                             <!-- Modal Content -->
-                                            <div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default"
+                                            <div class="modal fade" id="nvacc-modal" tabindex="-1" role="dialog" aria-labelledby="modal-default"
                                                 aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h2 class="h6 modal-title">Edit Vaccination</h2>
+                                                            <h2 class="h6 modal-title">Next Vaccination Dose</h2>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                 aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
                                                             <form method="post">
                                                                 {% csrf_token %}
-                                                                {{ edit_form | crispy }}
+                                                                {{ nvacc_form | crispy }}
+                                                                <div class="my-3">
+                                                                    <button type="submit" class="btn btn-success float-end">Save</button>
+                                                                    <button type="button" class="btn btn-primary float-end mx-2" data-bs-dismiss="modal">Close</button>
+                                                                </div>
                                                             </form>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary">Save</button>
-                                                            <button type="button" class="btn btn-link ms-auto"
-                                                                data-bs-dismiss="modal">Close</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -172,20 +160,33 @@
                                         </div>
                                   </div>
                                   <div class="row">
+                                      {% for nvac in next_vaccs  %}
+                                        <div class="my-3">
+                                            <span class="h5">Next Dose</span>
+                                        </div>
+
                                       <div class="col-md-4">Drug:</div>
-                                      <div class="col-md-8">{{vaccination.drug|title}}</div>
+                                      <div class="col-md-8">{{nvac.drug|title}}</div>
                                       <div class="col-md-4">Batch:</div>
-                                      <div class="col-md-8">{{vaccination.drug.batch}}</div>
+                                      <div class="col-md-8">{{nvac.drug.batch}}</div>
                                       <div class="col-md-4">Manufacturer:</div>
-                                      <div class="col-md-8">{{vaccination.drug.manufacturer}}</div>
+                                      <div class="col-md-8">{{nvac.drug.manufacturer}}</div>
                                       <div class="col-md-4">Doses:</div>
-                                      <div class="col-md-8">{{vaccination.drug.doses}} out of {{vaccination.drug.doses}} </div>
+                                      <div class="col-md-8">{{nvac.drug.doses}} out of {{nvac.drug.doses}} </div>
                                       <div class="col-md-4">Adminsistered at:</div>
-                                      <div class="col-md-8">{{vaccination.jabbed_at}}</div>
+                                      <div class="col-md-8">{{nvac.jabbed_at}}</div>
                                       <div class="col-md-4">Adminsistered On:</div>
-                                      <div class="col-md-8">{{vaccination.jabbed_on}}</div>
+                                      <div class="col-md-8">{{nvac.jabbed_on}}</div>
                                       <div class="col-md-4">Adminsistered by:</div>
-                                      <div class="col-md-8">{{vaccination.jabbed_by|title}}</div>
+                                      <div class="col-md-8">{{nvac.jabbed_by|title}}</div>
+                                      <hr class="my-3">
+                                      {% endfor %}
+                                      
+                                      <div class="d-grid">
+                                        <button type="button" class="btn btn-primary my-2" data-bs-toggle="modal"
+                                            data-bs-target="#nvacc-modal"><span class="fas fa-plus me-2"></span>Register new vaccination dose</button>
+                                    </div>
+
                                   </div>
                             </div>
                             </div>

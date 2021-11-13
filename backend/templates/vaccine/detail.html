@@ -42,8 +42,8 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-text-gray breadcrumb-white text-dark">
                         <li class="breadcrumb-item"><a href="#">Home</a></li> 
-                        <li class="breadcrumb-item"><a href="#">Vaccines</a></li>
-                        <!-- <li class="breadcrumb-item active" aria-current="page">List</li> -->
+                        <li class="breadcrumb-item"><a href="{% url 'vaccines' %}">Vaccines</a></li>
+                        <li class="breadcrumb-item activ" aria-current="page">{{vaccine}}</li>
                     </ol>
                 </nav>
                 <div class="row">
@@ -54,14 +54,14 @@
                                   <div class="row">
                                       <div class="col-8">
                                         <div class="mb-4">
-                                            <span class="h5">Vaccines</span>
+                                            <span class="h5">Batches of {{vaccine}}</span>
                                         </div>
                                       </div>
                                         <div class="col-md-4">
                                             <!-- Button Modal -->
                                             <div class="d-grid">
                                                 <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
-                                                    data-bs-target="#modal-default"><span class="fas fa-plus me-2"></span>Add New</button>
+                                                    data-bs-target="#modal-default"><span class="fas fa-plus me-2"></span>Register Batch</button>
                                             </div>
                                             <!-- Modal Content -->
                                             <div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default"
@@ -94,21 +94,17 @@
                                   <table id="table1" class="table table-striped" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>Drug Name</th>
-                                            <th>Doses</th>
-                                            <th>manufacturer</th>
-                                            <th>options </th>
+                                            <th>Batch #</th>
+                                            <th>Serial #</th>
+                                            <th>Expiry date</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for vaccine in vaccines  %}
+                                        {% for batch in batches  %}
                                         <tr>
-                                            <td>{{vaccine.name|title}}</td>
-                                            <td>{{vaccine.doses}}</td>
-                                            <td>{{vaccine.manufacturer|title}}</td>
-                                            <td>
-                                                <a href="{% url 'vaccine_detail' vaccine.id %}" class="btn btn-primary btn-sm">view</a>
-                                            </td>
+                                            <td>{{batch.batch}}</td>
+                                            <td>{{batch.serial}}</td>
+                                            <td>{{batch.expiry|timesince}}</td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>

@@ -23,7 +23,11 @@ class UserForm(forms.ModelForm):
     telephone = forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter telephone number.'}))
     first_name = forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter your first name '}))   
     last_name = forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter your last name'})) 
-    gender = forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Select your gender.'}))
+    # gender = forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Select your gender.'}))
+
+    def __init__(self, *args, **kwargs):
+        super(UserForm, self).__init__(*args, **kwargs)
+        self.fields['gender'].placeholder = "admin"
   
     class Meta:
         model = User

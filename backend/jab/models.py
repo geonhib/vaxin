@@ -40,11 +40,8 @@ class Manufacturer(models.Model):
 
 
 class Vaccine(models.Model):
-    name = models.CharField(max_length=100, null=False, blank=False)
-    batch = models.CharField(primary_key=True, max_length=50)        
-    serial = models.CharField(max_length=50, null=True, blank=True)     
+    name = models.CharField(max_length=100, null=False, blank=False)    
     doses = models.IntegerField(default=1)
-    expiry = models.DateField(auto_now_add=False, auto_now=False)
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
     approved  = models.BooleanField(default=False)
     added_on = models.DateTimeField(auto_now=True)
@@ -60,6 +57,22 @@ class Vaccine(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+
+class Batch(models.Model):
+    drug = models.ForeignKey(Vaccine, on_delete=models.CASCADE)
+    batch = models.CharField(primary_key=True, max_length=50)        
+    serial = models.CharField(max_length=50, null=True, blank=True)     
+    expiry = models.DateField(auto_now_add=False, auto_now=False)
+    approved  = models.BooleanField(default=False)
+    added_on = models.DateTimeField(auto_now=True)
+
+    class Meta :
+       ordering = ['-expiry']
+
+    def __str__(self):
+        return f"{self.drug} - {self.batch}"
+
+
 DOSAGE_CHOICES = (
     ("soon", "soon"),
     ("taken", "taken"),
@@ -71,7 +84,7 @@ class Vaccination(models.Model):
     jabbed_on = models.DateField(auto_now_add=False, auto_now=False)
     jabbed_at = models.ForeignKey(Facility, on_delete=models.CASCADE)
     jabbed_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='vaccinator')
-    dose = models.CharField(max_length=30, choices=DOSAGE_CHOICES, default="soon")
+    dose = models.CharField(max_length=30, choices=DOSAGE_CHOICES, default="taken")
     next_dose = models.DateField(auto_now_add=False, auto_now=False, null=True, blank=True)
 
     class Meta :
@@ -111,8 +124,8 @@ class Vaccination(models.Model):
 #             return f"{ctd}  to go!"              
 
 #     # TODO: recommend jab locations
-#     def __str__(self):
-#         return f"{self.drug}"  
+    def __str__(self):
+        return f"{self.drug}"  
 
 
 class NextVaccination(models.Model):   

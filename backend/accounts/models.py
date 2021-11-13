@@ -12,8 +12,8 @@ class CustomUser(AbstractUser):
     first_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50, null=True, blank=True)
     telephone = models.CharField(unique=True, max_length=20)
-    gender = models.CharField(max_length=30, choices=GENDER)
-    dob = models.DateField(auto_now_add=False, auto_now=False)
+    gender = models.CharField(max_length=30, null=True, default="female", choices=GENDER)
+    dob = models.DateField(auto_now_add=False, null=True, auto_now=False)
     picture = models.ImageField(upload_to="pictures/", null=True, blank=False)
 
     def __str__(self):

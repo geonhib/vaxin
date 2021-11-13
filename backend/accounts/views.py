@@ -29,9 +29,8 @@ def profile(request):
         return redirect('profile')
 
     reminders = Message.objects.filter(user=request.user, category="reminder")[:5]
-
     vaccinations = Vaccination.objects.filter(patient=request.user)
-    print(vaccinations)
+   
     context = {
         "edit_user": edit_user,
         "reminders": reminders, 
@@ -44,10 +43,18 @@ def dashboard(request):
     vaccines = Vaccine.objects.count()
     vaccinations = Vaccination.objects.count()
     reminders = Message.objects.filter(category="reminder").count()
+    users = User.objects.all()
+    female = users.filter(gender="female").count()
+    male = users.filter(gender="male").count()
+
     context = {
         "reminders": reminders,
         "vaccinations": vaccinations,
         "vaccines": vaccines,
+        "reminders": reminders, 
+        "users": users.count(),
+        "female": female,
+        "male": male,
     }
     return render(request, "dashboard.html", context)    
 
