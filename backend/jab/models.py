@@ -40,9 +40,9 @@ class Manufacturer(models.Model):
 
 
 class Vaccine(models.Model):
+    name = models.CharField(max_length=100, null=False, blank=False)
     batch = models.CharField(primary_key=True, max_length=50)        
     serial = models.CharField(max_length=50, null=True, blank=True)     
-    name = models.CharField(max_length=100, null=False, blank=False)
     doses = models.IntegerField(default=1)
     expiry = models.DateField(auto_now_add=False, auto_now=False)
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)

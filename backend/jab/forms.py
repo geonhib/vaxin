@@ -8,9 +8,14 @@ import datetime
 
 
 class FacilityForm(forms.ModelForm):
+    name = forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter health facility name'}))
+    address = forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter address of health facility'}))
+    contact = forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter contact details of health facility'}))
+
     def __init__(self, *args, **kwargs):
         super(FacilityForm, self).__init__(*args, **kwargs)
-        self.fields['name'].label = "Name of health facility"
+        self.fields['name'].label = "Health facility"
+        self.fields['name'].placeholder = "Health facility"
         self.fields['center_level'].label = "Health facility center Level"
         self.fields['contact'].label = "Health facility contact details"
     class Meta:
@@ -20,9 +25,13 @@ class FacilityForm(forms.ModelForm):
 
 
 class ManufacturerForm(forms.ModelForm):
+    name = forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter drug manufacturer '}))
+    address = forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter address of manufacturer'}))
+    contact = forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter contact of manufacturer'}))
+
     def __init__(self, *args, **kwargs):
         super(ManufacturerForm, self).__init__(*args, **kwargs)
-        self.fields['name'].label = "Name of drug manfacturer"
+        self.fields['name'].label = "Drug manfacturer"
     class Meta:
         model = Manufacturer
         fields = '__all__'
@@ -30,6 +39,10 @@ class ManufacturerForm(forms.ModelForm):
 
 
 class VaccineForm(forms.ModelForm):
+    name = forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter name of drug'}))    
+    batch = forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter batch number of drug'}))
+    serial = forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter serial number of drug'}))
+    doses = forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter number of doses that should be administered'}))
     manufacturer = forms.ModelChoiceField(queryset=Manufacturer.objects.filter(approved=True), empty_label='Select list of approved manufacturers')
 
     def __init__(self, *args, **kwargs):
@@ -62,6 +75,7 @@ class VaccinationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(VaccinationForm, self).__init__(*args, **kwargs)
         self.fields['jabbed_at'].label = "Administered at"
+        
 
     class Meta:
         model = Vaccination

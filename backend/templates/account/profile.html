@@ -39,6 +39,15 @@
                 </div>
             </div>
             <div class="col-12 col-lg-8">
+                   <!-- Toast -->
+                   <p class="text-center">{% include 'includes/messages.html' %}</p>
+                   <!-- End Toast -->
+                   <nav aria-label="breadcrumb">
+                       <ol class="breadcrumb breadcrumb-text-gray breadcrumb-white text-dark">
+                           <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li> 
+                           <li class="breadcrumb-item activ" aria-current="page">Profile</li>
+                       </ol>
+                   </nav>
                 <div class="row">
                     <div class="col-12 mb-4">
                         <div class="card border-gray-300">
@@ -99,7 +108,7 @@
                                                                 <!-- Modal Content -->
                                                                 <div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default"
                                                                     aria-hidden="true">
-                                                                    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                                                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                                                         <div class="modal-content">
                                                                             <div class="modal-header">
                                                                                 <h2 class="h6 modal-title">Update my profile</h2>
@@ -110,9 +119,10 @@
                                                                                 <form method="POST" novalidate enctype="multipart/form-data">
                                                                                     {% csrf_token %}
                                                                                     {{ edit_user | crispy }}
-                                                                                    <hr>
-                                                                                    <button type="submit" class="btn btn-secondary">Save</button>
-                                                                                    <button type="button" class="btn btn-link ms-auto" data-bs-dismiss="modal">Cancel</button>
+                                                                                    <div class="my-3">
+                                                                                        <button type="submit" class="btn btn-success float-end">Save</button>
+                                                                                        <button type="button" class="btn btn-primary float-end mx-2" data-bs-dismiss="modal">Close</button>
+                                                                                    </div>
                                                                                 </form>
                                                                             </div>
                                                                             <!-- <div class="modal-footer">
