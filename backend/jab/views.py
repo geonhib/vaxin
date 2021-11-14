@@ -85,9 +85,19 @@ def vaccine_list(request):
 def vaccine_detail(request, pk):
     vaccine = get_object_or_404(Vaccine, pk=pk)
     batches = Batch.objects.filter(drug=vaccine)
+
+    batch_form = BatchForm(request.POST or None, request.FILES or None)
+    if batch_form.is_valid():
+        instance = batch_form.save(commit=False)
+        instance.added_by = request.user
+        instance.added_on = datetime.date(datetime.now())
+        instance.save()                
+        messages.success(request, 'Batch registered successfully')
+        return redirect('batches')
     context = {
         "vaccine": vaccine,
         "batches": batches,
+        "batch_form": batch_form,
     }
     return render(request, 'vaccine/detail.html', context)
 

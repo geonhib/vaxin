@@ -69,14 +69,14 @@
                                                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h2 class="h6 modal-title">Add Vaccine</h2>
+                                                            <h2 class="h6 modal-title">Register Batch</h2>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                 aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
                                                             <form method="post">
                                                                 {% csrf_token %}
-                                                                {{ create_form | crispy }}
+                                                                {{ batch_form | crispy }}
                                                                 <div class="my-3">
                                                                     <button type="submit" class="btn btn-success float-end">Save</button>
                                                                     <button type="button" class="btn btn-primary float-end mx-2" data-bs-dismiss="modal">Close</button>

@@ -64,6 +64,7 @@ class Batch(models.Model):
     serial = models.CharField(max_length=50, null=True, blank=True)     
     expiry = models.DateField(auto_now_add=False, auto_now=False)
     approved  = models.BooleanField(default=False)
+    added_by = models.ForeignKey(User, on_delete=models.CASCADE)
     added_on = models.DateTimeField(auto_now=True)
 
     class Meta :
