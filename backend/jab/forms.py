@@ -68,18 +68,15 @@ class VaccineForm(forms.ModelForm):
 
 
 class BatchForm(forms.ModelForm):
-    name = forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter name of drug'}))    
+    drug = forms.ModelChoiceField(queryset=Vaccine.objects.filter(approved=True), empty_label='Select from list of vaccines')
     batch = forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter batch number of drug'}))
     serial = forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter serial number of drug'}))
-    doses = forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter number of doses that should be administered'}))
-    manufacturer = forms.ModelChoiceField(queryset=Manufacturer.objects.filter(approved=True), empty_label='Select list of approved manufacturers')
 
     def __init__(self, *args, **kwargs):
         super(BatchForm, self).__init__(*args, **kwargs)
         self.fields['batch'].label = "Batch number"
         self.fields['serial'].label = "Serial number"
-        self.fields['name'].label = "Name of Vaccine"
-        self.fields['doses'].label = "Number of doses to be administered"
+        self.fields['drug'].label = "Vaccine Name"
 
     def clean_date(self):
         date = self.cleaned_data['date']
@@ -90,7 +87,7 @@ class BatchForm(forms.ModelForm):
     class Meta:
         model = Batch
         fields = '__all__'
-        exclude = ('approved',)   
+        exclude = ('approved', 'added_by', )   
         widgets = {
             'expiry': widgets.DateInput(attrs={'type': 'date'})
         } 

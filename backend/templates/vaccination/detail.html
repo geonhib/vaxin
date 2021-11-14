@@ -125,13 +125,10 @@
                                       </div>
                                         <div class="col-md-4">
                                             <!-- Button Modal -->
-                                            {% comment %}
                                             <div class="d-grid">
                                                 <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
-                                                    data-bs-target="#nvacc-modal"><span class="fas fa-plus me-2"></span>Add New
-                                                </button>
+                                                    data-bs-target="#nvacc-modal"><span class="fas fa-plus me-2"></span>Add New</button>
                                             </div>
-                                            {% endcomment %}
                                             <!-- Modal Content -->
                                             <div class="modal fade" id="nvacc-modal" tabindex="-1" role="dialog" aria-labelledby="modal-default"
                                                 aria-hidden="true">
@@ -181,12 +178,6 @@
                                       <div class="col-md-8">{{nvac.jabbed_by|title}}</div>
                                       <hr class="my-3">
                                       {% endfor %}
-                                      
-                                      <div class="d-grid">
-                                        <button type="button" class="btn btn-primary my-2" data-bs-toggle="modal"
-                                            data-bs-target="#nvacc-modal"><span class="fas fa-plus me-2"></span>Register new vaccination dose</button>
-                                    </div>
-
                                   </div>
                             </div>
                             </div>
